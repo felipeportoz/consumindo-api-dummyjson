@@ -1,23 +1,58 @@
-const productId = document.getElementById('productId');
-const btnSearch = document.getElementById('btnSearch');
-const content = document.getElementById('content');
-const img = document.getElementById('img');
+fetch("https://dummyjson.com/products/1")
+  .then(resposta => resposta.json())
+  .then(produto => {
 
-const fetchApi = async (id) => {
-    const resposta = await fetch(`https://dummyjson.com/products/${id}`)
-    .then((res) => res.json())
-    .then((data) => {
-        console.log(data);
-        return data;
+    document.getElementById("tituloProduto").innerText =
+      produto.title;
+
+    document.getElementById("precoProduto").innerText =
+      "R$ " + produto.price;
+
+    document.getElementById("categoriaProduto").innerText =
+      produto.category;
+
+    document.getElementById("descricaoProduto").innerText =
+      produto.description;
+
+    document.getElementById("imagemProduto").src =
+      produto.thumbnail;
+  });
+
+const botao = document.getElementById("btnBuscar");
+const campo = document.getElementById("campoBusca");
+
+botao.addEventListener("click", buscarProduto);
+
+function buscarProduto() {
+
+  const termo = campo.value;
+
+  fetch(
+   `https://dummyjson.com/products/search?q=${termo}`
+  )
+    .then(res => res.json())
+    .then(dados => {
+
+      const produto = dados.products[0];
+
+      document.getElementById(
+        "tituloProduto"
+      ).innerText = produto.title;
+
+      document.getElementById(
+        "precoProduto"
+      ).innerText = "R$ " + produto.price;
+
+      document.getElementById(
+        "categoriaProduto"
+      ).innerText = produto.category;
+
+      document.getElementById(
+        "descricaoProduto"
+      ).innerText = produto.description;
+
+      document.getElementById(
+        "imagemProduto"
+      ).src = produto.thumbnail;
     });
-
-    return resposta;
 }
-
-btnSearch.addEventListener('click', (event) => {
-    event.preventDefault();
-    const result = fetchApi(productId.value);
-});
-
-
-
