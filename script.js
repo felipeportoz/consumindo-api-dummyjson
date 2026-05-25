@@ -1,91 +1,83 @@
-// ESTADO DO PRODUTO
-let produtoAtual = 1;
+// guarda o id do produto que ta na tela
+let idAtual = 1;
 
-// ELEMENTOS
-const botaoBuscar = document.getElementById("btnBuscar");
-const campo = document.getElementById("campoBusca");
+// pegando os elementos do html
+const btnBusca = document.getElementById("btnBuscar");
+const inputBusca = document.getElementById("campoBusca");
+const btnVoltar = document.getElementById("btnAnterior");
+const btnAvancar = document.getElementById("btnProximo");
 
-const btnAnterior = document.getElementById("btnAnterior");
-const btnProximo = document.getElementById("btnProximo");
+// carrega o primeiro ao abrir a pagina
+carregarProduto(idAtual);
 
-// CARREGAR PRIMEIRO PRODUTO
-carregarProduto(produtoAtual);
+// funcoes dos botoes
+btnBusca.addEventListener("click", buscarProduto);
 
-// EVENTOS
-// Buscar pelo nome
-botaoBuscar.addEventListener("click", buscarProduto);
-
-// Enter no input
-campo.addEventListener("keypress", function (event) {
-  if (event.key === "Enter") {
+inputBusca.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
     buscarProduto();
   }
 });
 
-// Produto anterior
-btnAnterior.addEventListener("click", function () {
-  if (produtoAtual > 1) {
-    produtoAtual--;
-    carregarProduto(produtoAtual);
+btnVoltar.addEventListener("click", function () {
+  if (idAtual > 1) {
+    idAtual--;
+    carregarProduto(idAtual);
   }
 });
 
-// Próximo produto
-btnProximo.addEventListener("click", function () {
-  produtoAtual++;
-  carregarProduto(produtoAtual);
+btnAvancar.addEventListener("click", function () {
+  idAtual++;
+  carregarProduto(idAtual);
 });
 
-// BUSCAR POR ID
+// buscar pelo id na api
 function carregarProduto(id) {
   fetch(`https://dummyjson.com/products/${id}`)
-    .then((resposta) => resposta.json())
-    .then((produto) => {
-      atualizarTela(produto);
+    .then(function (resposta) {
+      return resposta.json();
     })
-    .catch(() => {
+    .then(function (prod) {
+      mostrarNaTela(prod);
+    })
+    .catch(function () {
       alert("Erro ao carregar produto.");
     });
 }
 
-// BUSCAR POR NOME
+// buscar por texto
 function buscarProduto() {
-  const termo = campo.value;
-  if (termo === "") {
+  const texto = inputBusca.value;
+  
+  if (texto === "") {
     alert("Digite um produto.");
     return;
   }
 
-  fetch(`https://dummyjson.com/products/search?q=${termo}`)
-    .then((res) => res.json())
-    .then((dados) => {
-      if (dados.products.length === 0) {
+  fetch(`https://dummyjson.com/products/search?q=${texto}`)
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (resultado) {
+      if (resultado.products.length === 0) {
         alert("Produto não encontrado.");
         return;
       }
 
-      const produto = dados.products[0];
-
-      // importante:
-      // atualiza também o ID atual
-      produtoAtual = produto.id;
-
-      atualizarTela(produto);
+      const item = resultado.products[0];
+      idAtual = item.id; // atualiza o id global
+      mostrarNaTela(item);
     })
-    .catch(() => {
+    .catch(function () {
       alert("Erro ao buscar produto.");
     });
 }
 
-// ATUALIZA HTML
-function atualizarTela(produto) {
-  document.getElementById("tituloProduto").innerText = produto.title;
-
-  document.getElementById("precoProduto").innerText = "R$ " + produto.price;
-
-  document.getElementById("categoriaProduto").innerText = produto.category;
-
-  document.getElementById("descricaoProduto").innerText = produto.description;
-
-  document.getElementById("imagemProduto").src = produto.thumbnail;
+// joga os dados pro html
+function mostrarNaTela(p) {
+  document.getElementById("tituloProduto").innerText = p.title;
+  document.getElementById("precoProduto").innerText = "R$ " + p.price;
+  document.getElementById("categoriaProduto").innerText = p.category;
+  document.getElementById("descricaoProduto").innerText = p.description;
+  document.getElementById("imagemProduto").src = p.thumbnail;
 }
