@@ -1,20 +1,43 @@
-HTML
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <title>e-commerce</title>
-    <script src="./script.js" defer></script>
-</head>
-<body>
-    <form action="" method="get">
-        <input type="number" name="" id="productId">
-        <button id="btnSearch">Buscar</button>
-    </form>
-    <pre id="content"></pre>
-    <img src="" alt="" id="img">
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Atividade_Layout-15/05/2026</title>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Busca de Produtos</h1>
+
+      <nav>
+        <input id="campoBusca" type="text" placeholder="Digite um produto" />
+
+        <button id="btnBuscar">Buscar</button>
+      </nav>
+    </header>
+
+    <section>
+      <h1>Resultado</h1>
+    </section>
+
+    <main>
+      <div id="resultado_img">
+        <img id="imagemProduto" src="" alt="Produto" />
+      </div>
+
+      <div id="resultado_infos">
+        <p id="tituloProduto">Nome</p>
+        <p id="precoProduto">Preço</p>
+        <p id="categoriaProduto">Categoria</p>
+        <p id="descricaoProduto">Descrição</p>
+
+        <div class="btns_result">
+          <button>Comprar</button>
+          <button>Favoritar</button>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
