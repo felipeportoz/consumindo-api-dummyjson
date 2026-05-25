@@ -31,20 +31,22 @@ body {
 
 header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background-color: var(--cor_clara);
-  flex-grow: 1;
+  background-color: var(--cor-card);
+  box-shadow: var(--sombra);
 }
 
-header h1 {
+header h1,
+section h1 {
   font-weight: 100;
-  background-color: var(--cor_escura);
+  background-color: var(--cor-destaque);
   width: 25%;
   text-align: center;
   font-size: 2em;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 header nav input,
@@ -56,13 +58,18 @@ header nav button {
 }
 
 header nav input {
-  margin: 0 45px 0 0;
   width: 250px;
+  margin-right: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--cor-destaque);
+  transition: 0.3s;
 }
 
 header nav input:focus {
-  border: none;
   outline: none;
+  transform: scale(1.03);
 }
 
 header nav button {
@@ -94,14 +101,15 @@ main {
 }
 
 main #resultado_img {
-  background-color: var(--cor_escura);
+  background-color: var(--cor-card);
   height: 90%;
   width: 50%;
-  max-height: 100%;
-  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: var(--sombra);
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 main #resultado_infos {
@@ -114,9 +122,17 @@ main #resultado_infos {
 
 main #resultado_infos p {
   width: 100%;
-  background-color: var(--cor_escura);
-  font-size: 2em;
+  background-color: var(--cor-card);
+  font-size: 1.5em;
   text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: var(--sombra);
+  transition: 0.3s;
+}
+
+main #resultado_infos p:hover {
+  transform: scale(1.02);
 }
 
 main #resultado_infos .btns_result {
@@ -129,6 +145,25 @@ main #resultado_infos .btns_result button {
   font-size: 2em;
   border: none;
   padding: 10px;
+}
+
+button {
+  background-color: var(--cor-destaque);
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: var(--cor-hover);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: scale(0.97);
 }
 
 @media (max-width: 768px) {
